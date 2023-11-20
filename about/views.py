@@ -1,9 +1,19 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from .models import Factor, SubFactor
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
-def hello(request):
-    return HttpResponse("hello world")
-
 def about(request):
-    return HttpResponse("la otra")
+    factors = list(Factor.objects.values())
+    return JsonResponse(factors, safe=False)
+
+def docurey(request, id):
+    subfactor = get_object_or_404(SubFactor, id=id)
+    return HttpResponse('el subfactor que buscas es %s'% subfactor.name)
+
+def podcast(request):
+    return HttpResponse("Como te ganas la vida?")
+
+def reynogpt(request):
+    return HttpResponse("Reynogpt")
