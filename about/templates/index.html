@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subfactor Questionnaire</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    color: #333;
+  }
+  .container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  form .question {
+    display: none;
+    margin-top: 5px;
+  }
+  form .question.active {
+    display: block;
+  }
+  form div label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  form div input[type="text"] {
+    width: 70%; /* Shortened input field */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: inline-block; /* Align with the button */
+  }
+  form div button {
+    width: 28%; /* Space for the button next to the input */
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #0052cc;
+    color: white;
+    cursor: pointer;
+    display: inline-block; /* Align with the input */
+    vertical-align: top; /* Align with the input */
+  }
+  form div button:hover {
+    background-color: #0044cc;
+  }
+  .thank-you-message {
+    display: none;
+    text-align: center;
+    margin-top: 50px;
+  }
+</style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Subfactor Questionnaire</h1>
+      
+        <form id="subfactorForm">
+          <div id="questionExperience" class="question active">
+            <label for="experience">Experience:</label>
+            <input type="text" id="experience" name="experience">
+            <button type="button" onclick="moveToNextQuestion()">Next</button>
+          </div>
+      
+          <div id="questionKnowledge" class="question">
+            <label for="knowledge">Knowledge:</label>
+            <input type="text" id="knowledge" name="knowledge">
+            <button type="button" onclick="moveToNextQuestion()">Next</button>
+          </div>
+      
+          <div id="questionPhysical" class="question">
+            <label for="physical">Physical:</label>
+            <input type="text" id="physical" name="physical">
+            <button type="button" onclick="moveToNextQuestion()">Next</button>
+          </div>
+      
+          <div id="questionMental" class="question">
+            <label for="mental">Mental:</label>
+            <input type="text" id="mental" name="mental">
+            <button type="button" onclick="moveToNextQuestion()">Next</button>
+          </div>
+      
+          <div id="questionResults" class="question">
+            <label for="results">Results:</label>
+            <input type="text" id="results" name="results">
+            <button type="button" onclick="moveToNextQuestion()">Next</button>
+          </div>
+      
+          <div id="questionDevelopment" class="question">
+            <label for="development">Development:</label>
+            <input type="text" id="development" name="development">
+            <button type="button" onclick="moveToNextQuestion()">Next</button>
+          </div>
+      
+          <div id="questionData" class="question">
+            <label for="data">Data:</label>
+            <input type="text" id="data" name="data">
+            <button type="button" onclick="moveToNextQuestion()">Next</button>
+          </div>
+      
+          <div id="questionCulture" class="question">
+            <label for="culture">Culture:</label>
+            <input type="text" id="culture" name="culture">
+            <button type="button" onclick="moveToNextQuestion()">Next</button>
+          </div>
+      
+          <div id="questionSubmit" class="question">
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      
+        <div id="thankYouMessage" class="thank-you-message">
+          <h2>Thank you for your answers!</h2>
+          <p>We will give you the results shortly.</p>
+        </div>
+      </div>
+
+<script>
+  const form = document.getElementById('subfactorForm');
+  let currentQuestionIndex = 0;
+  const questions = form.querySelectorAll('.question');
+  const totalQuestions = questions.length; // Includes the submit button
+  const thankYouMessage = document.getElementById('thankYouMessage');
+
+  form.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      moveToNextQuestion();
+    }
+  });
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Hide the form and show the thank you message
+    form.style.display = 'none';
+    thankYouMessage.style.display = 'block';
+  });
+
+  function moveToNextQuestion() {
+    const currentInput = questions[currentQuestionIndex].querySelector('input');
+    if (currentInput && currentInput.value.trim() === '') {
+      alert('Please answer the question.');
+      return;
+    }
+    if (currentQuestionIndex < totalQuestions - 1) {
+      questions[currentQuestionIndex].classList.remove('active');
+      questions[++currentQuestionIndex].classList.add('active');
+      if (currentQuestionIndex < totalQuestions - 1) {
+        questions[currentQuestionIndex].querySelector('input').focus();
+      }
+    } else {
+      // We're at the submit button, trigger the submit event
+      form.dispatchEvent(new Event('submit'));
+    }
+  }
+</script>
+
+</body>
+</html>

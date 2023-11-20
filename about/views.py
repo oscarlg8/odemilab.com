@@ -5,8 +5,7 @@ from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def about(request):
-    factors = list(Factor.objects.values())
-    return JsonResponse(factors, safe=False)
+    return render(request, 'index.html')
 
 def docurey(request, id):
     subfactor = get_object_or_404(SubFactor, id=id)
